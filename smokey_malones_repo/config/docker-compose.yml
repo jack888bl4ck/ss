@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  bot:
+    build: ./smokey_malones_bot
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - webapp
+
+  webapp:
+    build: ./smokey_malones_webapp
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: smokey_malones
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+        

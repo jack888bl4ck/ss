@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral Leaderboard</title>
+</head>
+<body>
+    <h1>Top Referrers</h1>
+    <ul id="leaderboard"></ul>
+
+    <script>
+        fetch('/leaderboard_data')
+        .then(response => response.json())
+        .then(data => {
+            const list = document.getElementById('leaderboard');
+            data.forEach((user, index) => {
+                let maskedName = user.username.substring(0, 4) + "****";
+                list.innerHTML += `<li>#${index + 1} - ${maskedName} (${user.referrals} referrals)</li>`;
+            });
+        });
+    </script>
+</body>
+</html>
+        
